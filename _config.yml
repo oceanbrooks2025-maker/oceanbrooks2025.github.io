@@ -104,7 +104,6 @@ theme: landscape
 deploy:
   type: git
   repo: https://github.com/oceanbrooks2025/oceanbrooks2025.github.io.git
-  # repo: https://oceanbrooks2025:@XKCLrVC8@KeRr9@github.com/oceanbrooks2025/oceanbrooks2025.github.io.git
   branch: main
 
   
