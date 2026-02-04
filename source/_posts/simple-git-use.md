@@ -4,7 +4,7 @@ date: 2026-02-04 12:00
 categories: 'test'
 tags: 
   - 'test'
-description: 
+description: Git Portable 添加到右键菜单 & 常用命令
 ---
 
 1. 安装 Git
