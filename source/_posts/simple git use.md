@@ -1,6 +1,6 @@
 ---
 title: 简单的 Git 同步方法
-date: 2024-03-26 20:48:01
+date: 2026-02-04 12:00
 categories: 'test'
 tags: 
   - 'test'
