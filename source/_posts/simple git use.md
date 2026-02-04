@@ -7,8 +7,6 @@ tags:
 description: 
 ---
 
-## 简单的 Git 同步方法
-
 1. 安装 Git
 
    如果是安装的 portable 版本，右键没有 Git Bash 选项，手动添加一个
