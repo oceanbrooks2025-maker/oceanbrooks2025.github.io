@@ -67,5 +67,23 @@ description: Git Portable 添加到右键菜单 & 常用命令
 
 4. SSH身份认证
 
-   正文...
+   - 在本地设备上生成新密钥。密码留空即可。生成成功之后在本地找到公钥 `id_ed25519.pub` 并复制其内容。
+   
+   ~~~
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+   ~~~
+   
+   - 将公钥添加到 `GitHub` : 依次点击 `Settings` -> `SSH and GPG keys` -> `New SSH key` 
+   
+   - 测试连通性
+   
+   ~~~
+   ssh -T git@github.com
+   ~~~
+   
+   如果看到了 `Hi <username>! You've successfully authenticated...` 则意味着连接成功。
+   
+   
+   
+   
 
