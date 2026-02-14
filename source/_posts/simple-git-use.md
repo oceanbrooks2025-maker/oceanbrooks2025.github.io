@@ -1,9 +1,9 @@
 ---
 title: 简单的 Git 同步方法
 date: 2026-02-04 12:00
-categories: 'test'
+categories: 'skills'
 tags: 
-  - 'test'
+  - 'git'
 description: Git Portable 添加到右键菜单 & 常用命令
 ---
 
