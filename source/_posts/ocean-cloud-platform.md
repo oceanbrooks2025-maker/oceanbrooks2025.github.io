@@ -84,7 +84,7 @@ sudo systemctl status cloudflared
 
 **配置流程：**
 
-1.  **设置公网映射 (Public Hostname) ** ：
+1. **设置公网映射 (Public Hostname)**：
 
    在 Tunnel 的配置页面，添加一个 Public Hostname。
 
@@ -92,7 +92,7 @@ sudo systemctl status cloudflared
    - **Service**: `ssh://localhost:22`
    - 这一步告诉 Cloudflare，把访问 `ssh.oceanlog.top` 的流量，转发给我服务器的 22 端口。
 
-2. ** 配置应用策略 (Access Application) **：
+2. **配置应用策略 (Access Application)**：
 
    光映射不行，还得有界面。
 
