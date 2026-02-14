@@ -194,17 +194,17 @@ git push -u origin main
 
 代码上了 GitHub，接下来就是让 Cloudflare 接管构建。
 
-1. 登录 **Cloudflare Dashboard**，进入 `Workers & Pages` -> `Create application` -> `Pages` -> `Connect to Git`。
+1. 登录 Cloudflare Dashboard，进入 `Workers & Pages` -> `Create application` -> `Pages` -> `Connect to Git`。
 
 2. 授权访问我的 GitHub 账号，并选择刚才创建的 `ocean-blog-source` 仓库。
 
-3. **配置构建环境（Build settings）**：
+3. **配置构建环境**：
 
    Cloudflare 非常智能，预设了 Hexo 模板，通常只需要确认以下信息：
 
-   - **Framework preset**: 选 `Hexo`。
-   - **Build command**: `hexo generate`（或者 `npm run build`）。
-   - **Build output directory**: `public`。
+   - Framework preset: 选 `Hexo`。
+   - Build command: `hexo generate`（或者 `npm run build`）。
+   - Build output directory: `public`。
 
 4. 点击 `Save and Deploy`。
 
@@ -458,7 +458,7 @@ services:
 
 ### 4.2 升级路线：Notes v2.0
 
-目前的便签应用只是一个 MVP（最小可行性产品），功能还很简陋。接下来的开发计划包括：
+目前的便签应用只是一个最小可行性产品，功能还很简陋。接下来的开发计划包括：
 
 - **Markdown 渲染支持**：目前输入框只支持纯文本。既然是程序员的笔记，支持 Markdown 语法（代码高亮、列表、粗体）是刚需。前端需要引入 `marked.js` 或类似库。
 - **全文搜索**：随着笔记增多，光靠瀑布流展示是不够的。需要在后端实现一个简单的关键词过滤接口，甚至引入简单的搜索引擎机制。
@@ -471,14 +471,14 @@ services:
 既然 Docker 环境已经搭好，服务器性能还有富余，可以考虑部署更多实用的自托管服务：
 
 - **个人导航页**：现在我还只有一个笔记本应用，不涉及管理问题。如果以后服务多起来了，可以考虑将 `dev` 子域改造为导航页，统一管理入口。
-- **服务监控**：如何知道博客挂了没？部署一个Uptime Kuma。让它监控我的所有服务状态，一旦挂了通过邮件发提醒，而且它还能生成好看的状态页。
-- **文件同步**：目前的便签只能存文字。如果需要存文件、照片，可以部署轻量级的文件浏览器或者功能强大的Nextcloud。
+- **服务监控**：如何知道博客挂了没？部署一个 Uptime Kuma 。让它监控我的所有服务状态，一旦挂了通过邮件发提醒，而且它还能生成好看的状态页。
+- **文件同步**：目前的便签只能存文字。如果需要存文件、照片，可以部署轻量级的文件浏览器或者功能强大的 Nextcloud 。
 
 ### 4.4 运维路线：数据备份
 
 这是目前架构中唯一的短板。虽然我用了 Docker Volume 实现了数据持久化，但数据毕竟依然只存储在服务器的物理硬盘上。**数据不做异地备份，就等于没有备份。**
 
-下一步的计划是引入Rclone工具：
+下一步的计划是引入 Rclone 工具：
 
 - 编写 Shell 脚本，每天凌晨定时打包压缩 `data/` 目录。
 - 通过 Rclone 自动加密上传到对象存储（如 Cloudflare R2 或 AWS S3）。
