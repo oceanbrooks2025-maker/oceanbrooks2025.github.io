@@ -25,11 +25,11 @@ description: 关于个人建站的阶段记录
 
 ------
 
-## 第一章：基础设施与远程访问
+## 第一章 基础设施与远程访问
 
 这是地基部分。核心诉求很简单：我人在外面（比如星巴克），要能访问家里服务器上的网页，或者通过终端控制它。
 
-### 1.1 起步：公网 IP 的折腾与放弃
+### 1.1 公网 IP 路线（已放弃）
 
 最开始的想法是直接申请公网 IP。
 
@@ -50,7 +50,7 @@ description: 关于个人建站的阶段记录
 - **操作**：在域名注册商后台，将 NS 记录修改为 Cloudflare 分配的那两个地址（例如 `xxx.ns.cloudflare.com`）。
 - **验证**：去 Cloudflare 控制台添加站点，等到状态变成 "Active" 就算接管成功。
 
-### 1.3 核心组件：部署 Cloudflare Tunnel
+### 1.3 部署隧道
 
 这是整个内网穿透的核心。它的原理是在我家服务器运行一个守护进程 `cloudflared`，主动向 Cloudflare 的边缘节点建立一条加密通道。外部流量通过 Cloudflare 进来，顺着通道流到我家，无需在路由器上做任何端口映射。
 
@@ -78,7 +78,7 @@ sudo systemctl status cloudflared
 
 如果看到 `Active: active (running)`，且 Cloudflare 网页上的状态变成了 `Healthy`，说明隧道这就打通了。
 
-### 1.4 配置 SSH 浏览器访问
+### 1.4 SSH Web访问
 
 隧道通了之后，第一件事是解决远程管理问题。我暂时只需要一个能随时随地用的 Web 终端，Cloudflare Zero Trust 自带的 Browser Rendering 功能完美解决，连 SSH 客户端都不用装。
 
@@ -115,7 +115,7 @@ sudo systemctl status cloudflared
 
 
 
-## 第二章：个人博客搭建
+## 第二章 
 
 基础设施搞定后，先搭建一个简单的静态网站，用以存放个人博客。我不希望在这个环节投入任何服务器运维成本（比如去维护一个 Linux 上的 Nginx 或者 PHP 环境），所以我选择了 **Jamstack** 架构：**Hexo + GitHub + Cloudflare Pages**。
 
@@ -123,7 +123,7 @@ sudo systemctl status cloudflared
 
 ### 2.1 架构思路与选型
 
-传统的博客（如 WordPress）是动态的，用户访问时服务器现算页面。而 Hexo 是静态生成器，它把 Markdown 文章在本地编译成 HTML。
+传统的博客是动态的，用户访问时服务器现算页面。而 Hexo 是静态生成器，它把 Markdown 文章在本地编译成 HTML。
 
 我的部署流程如下：
 
@@ -152,7 +152,7 @@ npm install
 
 此时运行 `hexo server`，就可以在 `localhost:4000` 看到雏形了。
 
-### 2.3 关键：GitHub 仓库策略
+### 2.3 GitHub 仓库策略
 
 这里有一个容易混淆的点：**我们要传到 GitHub 上的，不是 `public` 文件夹，而是除了 `public` 和 `node_modules` 之外的所有源文件。**
 
@@ -186,7 +186,7 @@ git commit -m "feat: blog init"
 git push -u origin main
 ```
 
-### 2.4 Cloudflare Pages 自动化部署 (CI/CD)
+### 2.4 Cloudflare 自动化部署
 
 代码上了 GitHub，接下来就是让 Cloudflare 接管构建。
 
@@ -234,7 +234,7 @@ Cloudflare 就会自动触发构建，我的博客就更新了。
 
 
 
-## 第三章：动态应用：构建全栈私有云便签 "Ocean Notes"
+## 第三章 动态应用
 
 静态博客是对外展示，动态应用是对内服务。这一部分涵盖了全栈开发、容器化部署、网络隔离的完整过程，是技术含量最高、逻辑最复杂的部分。
 
@@ -253,7 +253,7 @@ Cloudflare 就会自动触发构建，我的博客就更新了。
 - **网关**：Nginx (反向代理 + 静态资源托管)。
 - **部署**：Docker + Docker Compose (容器编排)。
 
-### 3.2 后端开发：逻辑与数据 (FastAPI)
+### 3.2 后端开发：FastAPI
 
 后端的职责很简单：验证 Token、读写数据库。
 
@@ -267,7 +267,7 @@ Cloudflare 就会自动触发构建，我的博客就更新了。
 
 3. **环境变量隔离**：这是安全开发的第一课。我没有将密码硬编码在代码里，而是通过 `os.getenv("SECRET_TOKEN")` 从系统环境变量中读取。
 
-   主要注意的是，要在 .gitignore 
+   需要注意的是，要在 .gitignore 添加忽略 .env 文件
 
 **核心代码片段：**
 
@@ -288,14 +288,14 @@ async def verify_token(x_token: str = Header(..., alias="X-Ocean-Token")):
 DB_PATH = "storage/data.db"
 ```
 
-### 3.3 前端开发 (Vue 3)
+### 3.3 前端开发：Vue 3
 
 前端是一个单页应用 (SPA)，包含两个视图状态：
 
 1. **验证视图**：一个简单的密码框。
 2. **工作视图**：便签列表和输入框。
 
-#### 遇到的坑：异常吞没 (Swallowed Exception)
+#### 遇到的坑：异常吞没
 
 在调试时，我发现即便输入了错误的 Token，前端有时也会错误地进入“登录状态”。
 
@@ -320,7 +320,7 @@ const request = async (endpoint, options = {}) => {
 };
 ```
 
-### 3.4 容器化：编写 Dockerfile
+### 3.4 容器化：Dockerfile
 
 应用开发完成后，下一步是“装箱”。我为后端编写了 `Dockerfile`。
 
@@ -329,7 +329,6 @@ const request = async (endpoint, options = {}) => {
 ```dockerfile
 # 使用轻量级 Python 基础镜像
 FROM python:3.9-slim
-
 WORKDIR /app
 COPY requirements.txt .
 
@@ -375,7 +374,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 **意义**：这意味着 Python 后端完全断开了与宿主机外部的直接联系。它只能被处于同一个 Docker 网络下的 Nginx 访问。外部访客即使扫到了我的 IP，也无法绕过 Nginx 直接攻击 API。
 
-#### 3. 数据持久化陷阱
+#### 3. 数据持久化
 
 初次部署时，我重启容器后发现数据丢了。
 
@@ -385,7 +384,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 
 **修复**：改为目录对目录挂载 `- ./data:/app/storage`，让数据库文件在目录中自动生成。
 
-### 3.6 最终的 Docker Compose 配置
+### 3.6 最终配置
 
 这是经过多次迭代后，稳定运行的 `docker-compose.yml`：
 
@@ -429,7 +428,7 @@ services:
 
 
 
-## 第四章：总结与未来路线图
+## 第四章 总结与未来路线图
 
 ### 4.1 技术路线回顾
 
