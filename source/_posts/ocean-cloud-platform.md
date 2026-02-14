@@ -115,7 +115,7 @@ sudo systemctl status cloudflared
 
 
 
-## 第二章 
+## 第二章 静态博客
 
 基础设施搞定后，先搭建一个简单的静态网站，用以存放个人博客。我不希望在这个环节投入任何服务器运维成本（比如去维护一个 Linux 上的 Nginx 或者 PHP 环境），所以我选择了 **Jamstack** 架构：**Hexo + GitHub + Cloudflare Pages**。
 
