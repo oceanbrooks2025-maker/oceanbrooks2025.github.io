@@ -61,7 +61,7 @@ description: 关于个人建站的阶段记录
 3. 给隧道起个名（比如 `HomeServer`），保存。
 4. **安装守护进程**：在服务器（Ubuntu）上执行它给出的安装命令。
 
-当时我使用的是 Debian/Ubuntu 的安装方式，命令大致如下（注意 `token` 是生成的长字符串）：
+Ubuntu 系统的安装命令大致如下（注意 `token` 是生成的长字符串）：
 
 ```bash
 # 下载、安装、启动 cloudflared（注意替换 token）
@@ -84,7 +84,7 @@ sudo systemctl status cloudflared
 
 **配置流程：**
 
-1. **设置公网映射 (Public Hostname)**：
+1. **设置公网映射** (Public Hostname)：
 
    在 Tunnel 的配置页面，添加一个 Public Hostname。
 
@@ -92,7 +92,7 @@ sudo systemctl status cloudflared
    - **Service**: `ssh://localhost:22`
    - 这一步告诉 Cloudflare，把访问 `ssh.oceanlog.top` 的流量，转发给我服务器的 22 端口。
 
-2. **配置应用策略 (Access Application)**：
+2. **配置应用策略** (Access Application)：
 
    光映射不行，还得有界面。
 
@@ -169,7 +169,7 @@ git branch -M main
 git remote add origin git@github.com:yourname/ocean-blog-source.git
 ```
 
-1. **配置 `.gitignore`**：这是最重要的一步。确保文件里包含以下内容，避免把垃圾文件传上去：
+1. **配置 Git 忽略文件**：这是最重要的一步。确保 `.gitignore` 文件里包含以下内容，避免把垃圾文件传上去：
 
 ```text
 node_modules/
@@ -261,7 +261,7 @@ Cloudflare 就会自动触发构建，我的博客就更新了。
 
 为了保持项目整洁，我采用了**单文件架构** (`main.py`)。核心逻辑包括：
 
-1. **数据模型 (Pydantic)**：定义了前端传来的数据格式（`content`）和返回的数据格式（`id`, `timestamp`）。
+1. **数据模型**：定义了前端传来的数据格式（`content`）和返回的数据格式（`id`, `timestamp`）。
 
 2. **中间件鉴权**：编写了一个依赖注入函数 `verify_token`。它会拦截每一个请求，检查 HTTP Header 中的 `X-Ocean-Token`。
 
@@ -442,7 +442,7 @@ services:
    - 采用了 **Jamstack** 架构（Hexo + GitHub + Cloudflare Pages）。
    - 实现了 **GitOps** 工作流：本地只管写 Markdown，推送到 GitHub 后，构建和发布全自动完成。
    - 成本为零，且拥有企业级的 CDN 加速。
-3. **动态服务：
+3. **动态服务**：
    - 采用了微服务容器化架构。
    - **Nginx** 作为网关，负责路由分发和静态资源。
    - **FastAPI** 作为后端，负责业务逻辑，且通过环境变量隔离了敏感配置。
