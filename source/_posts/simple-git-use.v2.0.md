@@ -22,7 +22,7 @@ description: 单人独立开发场景下，基于 Git 与 GitHub 的版本控制
 
 1. 生成 SSH 密钥对：
 
-打开终端（Git Bash），执行以下命令生成基于 ed25519 算法的密钥：
+打开任意终端，执行以下命令生成基于 ed25519 算法的密钥：
 
 ```bash
 ssh-keygen -t ed25519 -C "your_email@example.com"
