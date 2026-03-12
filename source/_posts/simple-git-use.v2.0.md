@@ -20,22 +20,24 @@ description: 单人独立开发场景下，基于 Git 与 GitHub 的版本控制
 
 **配置步骤**：
 
-1. **生成 SSH 密钥对**：
-   打开终端（Git Bash），执行以下命令生成基于 ed25519 算法的密钥：
-   ```bash
-   ssh-keygen -t ed25519 -C "your_email@example.com"
-	```
+1. 生成 SSH 密钥对：
 
-​		一路回车按默认设置即可。
+打开终端（Git Bash），执行以下命令生成基于 ed25519 算法的密钥：
 
-2. **添加公钥至 GitHub**：
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+​一路回车按默认设置即可。
+
+2. 添加公钥至 GitHub：
 * 在用户目录下的 `.ssh` 文件夹中找到公钥文件 `id_ed25519.pub`。
 * 用文本编辑器打开，全选并复制全部内容。
 * 登录 GitHub，进入 `Settings` -> `SSH and GPG keys` -> `New SSH key`。
 * 填写 Title（如设备名称），将复制的公钥粘贴至 Key 框中，点击 `Add SSH key`。
 
 
-3. **测试连通性**：
+3. 测试连通性：
 ```bash
 ssh -T git@github.com
 ```
@@ -60,8 +62,8 @@ git config --global user.email "your_email@example.com"
 
 ```bash
 # 如果代理仅支持 HTTP 协议
-git config --global http.proxy [http://127.0.0.1](http://127.0.0.1):<port>
-git config --global https.proxy [http://127.0.0.1](http://127.0.0.1):<port>
+git config --global http.proxy http://127.0.0.1:<port>
+git config --global https.proxy https://127.0.0.1:<port>
 
 # 如果代理支持 SOCKS5 协议
 git config --global http.proxy socks5://127.0.0.1:<port>
@@ -180,7 +182,7 @@ git reset --soft HEAD~1
 ```
 
 
-* **Hard 模式（硬回退）**：撤销 `commit` 记录，**且强制丢弃**本地的所有修改，代码完全恢复至指定版本。操作需谨慎。
+* **Hard 模式（硬回退）**：撤销 `commit` 记录，且**强制丢弃**本地的所有修改，代码完全恢复至指定版本。操作需谨慎。
 ```bash
 # 回退到指定的 commit 节点（通过 git log 查看节点哈希值）
 git reset --hard <commit_hash>
@@ -188,13 +190,14 @@ git reset --hard <commit_hash>
 
 ---
 
-## 5. 补充技巧：将 Portable Git Bash 添加至右键菜单
+## 5. 补充技巧
+### 5.1 将 Portable Git Bash 添加至右键菜单
 
 在无管理员权限的环境下，可通过 Windows 的“发送到”功能，将免安装（Portable）版本的 Git Bash 加入右键菜单。由于“发送到”传递的是目录路径，而 Git Bash 默认接收脚本文件，需要通过自定义批处理脚本进行中转。
 
 **操作步骤**：
 
-1. **创建启动脚本**：
+1. 创建启动脚本：
 在 Git 目录下创建一个 `OpenGitBash.bat` 文件，内容如下：
 ```bat
 @echo off
@@ -211,9 +214,10 @@ start "" "git-bash.exe"
 
 *注：此处的终端代理对多数命令行工具生效，但部分工具（如 npm）可能仍需通过其自身的 config 进行配置。*
 
-2. **创建快捷方式**：
+2. 创建快捷方式：
 为 `OpenGitBash.bat` 创建一个快捷方式。
-3. **加入“发送到”目录**：
+
+3. 加入“发送到”目录：
 按下 `Win + R`，输入 `shell:sendto` 打开目录，将刚刚创建的快捷方式放入该文件夹。
 
 **使用方法**：
